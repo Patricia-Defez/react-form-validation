@@ -9,7 +9,9 @@ class App extends Component {
     emails: []
   }
 
-  addEmail = (email) => this.setState({ emails: [...this.state.emails, email] })
+  addEmail = (email) => {
+    this.setState({ emails: [...this.state.emails, email] })
+  }
 
   render() {
     return (
@@ -20,7 +22,7 @@ class App extends Component {
           <div className="container">
             <div className="columns">
               <div className="column">
-                <Form onSubmit={this.addEmail}/>
+                <Form onSubmit={this.addEmail} addEmail={this.addEmail}/>
               </div>
               <div className="column">
                 <List emails={this.state.emails}/>

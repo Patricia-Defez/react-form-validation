@@ -1,7 +1,11 @@
 import React from 'react';
 
-export default () => (
+export default (props) => (
   <div className="List">
-    List
+    <ul>
+      {props.emails.map((email, i) => (
+        <li key={i}>{email}</li>
+      ))}
+    </ul>
   </div>
 );
