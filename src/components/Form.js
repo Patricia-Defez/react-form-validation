@@ -14,7 +14,7 @@ export default class Form extends Component {
 
     this.setState({
       [name]: value,
-      error: !emailRegexp.test(value)
+      error: !emailRegexp.test(value) || this.props.emails.includes(value)
     })
   }
 
