@@ -14,16 +14,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar/>
+        <NavBar />
 
         <section className="section">
           <div className="container">
             <div className="columns">
               <div className="column">
-                <Form onSubmit={this.addEmail}/>
+                <Form addEmail={this.addEmail} />
               </div>
               <div className="column">
-                <List emails={this.state.emails}/>
+                <List emails={this.state.emails} />
               </div>
             </div>
           </div>
