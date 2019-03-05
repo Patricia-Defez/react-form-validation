@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+
+const validator = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test;
+
 export default class Form extends Component {
   constructor(props){
     super(props);
@@ -8,13 +11,17 @@ export default class Form extends Component {
       error: true
     }
   }
+ 
+
   onChange = (e)=>{
     // const name = e.target.name;
     // const value = e.target.value;
-
-    this.setState({
-      email: e.target.value
-    })
+    if(e.target.value = validator){
+      this.setState({
+        email: e.target.value,
+        error: false
+      })
+    }
   }
 
   onSubmit = (e) => {
@@ -37,12 +44,12 @@ export default class Form extends Component {
             <i class="fas fa-check"></i>
           </span>
         </div>
-        <p class="help is-success">This username is available</p>
+        <p class="help is-success">This email is available</p>
         <p class="help is-danger">This email is invalid</p>
       </div>
 
       <div class="control">
-        <button class="button is-link">Submit</button>
+        <button class="button is-link" disabled = {this.state.error}>Submit</button>
       </div>
     </form>
   );
