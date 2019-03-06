@@ -4,53 +4,73 @@ import React, { Component } from 'react';
 const validator = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test;
 
 export default class Form extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       email: '',
-      error: true
+      error: true,
+      touch: false
     }
   }
- 
+
 
   onChange = (e)=>{
-    // const name = e.target.name;
-    // const value = e.target.value;
-    if(e.target.value = validator){
-      this.setState({
-        email: e.target.value,
-        error: false
-      })
-    }
+    const isEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e.target.value);
+
+    this.setState({
+      email: e.target.value,
+      error: !isEmail
+    })
+  }
+  handleBlur = (e) =>{
+    this.setState({ touch: true}); 
   }
 
   onSubmit = (e) => {
     e.preventDefault();
     this.props.addEmail(this.state.email)
+    this.reset(e)
   }
+
+  reset = e => (e.target.value = '')
 
   render = () => (
     <form className="Form" onSubmit={this.onSubmit}>
-      <div class="field">
-        <label class="label">User email</label>
-        <div class="control has-icons-left has-icons-right">
-          <input class="input is-success" type="email" name="email" placeholder="User email" value={this.state.email}
-          onChange={this.onChange} />
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
+        <div className="field">
+            <label className="label">User email</label>
+            <div className="control has-icons-left has-icons-right">
+                <input className="input is-success" type="email" name="email" placeholder="User email" value={this.state.email}
+                onChange={this.onChange} onBlur={this.handleBlur}  />
+                <span className="icon is-small is-left">
+                    <i className="fas fa-user"></i>
+                </span> 
 
-          <span class="icon is-small is-right">
-            <i class="fas fa-check"></i>
-          </span>
+                {this.state.touch && this.state.error && (
+                    <span className="icon is-small is-right">
+                        <i className="fas fa-exclamation-triangle"></i>
+                    </span>               
+
+                )}
+
+                {this.state.touch && !this.state.error && (
+                    <span className="icon is-small is-right">
+                        <i className="fas fa-check"></i>
+                    </span>
+                )}
+
+            </div>
+
+            {this.state.touch && !this.state.error && (
+                <p className="help is-success">This email is available</p>
+            )}
+            {this.state.touch && this.state.error && (
+                <p className="help is-danger">This email is invalid</p>
+            )}    
         </div>
-        <p class="help is-success">This email is available</p>
-        <p class="help is-danger">This email is invalid</p>
-      </div>
 
-      <div class="control">
-        <button class="button is-link" disabled = {this.state.error}>Submit</button>
-      </div>
+        <div className="control">
+            <button type="submit" className="button is-link" disabled = {this.state.error}>Submit</button>
+        </div>
     </form>
   );
 }
